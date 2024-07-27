@@ -1,0 +1,23 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # أو الفرع الذي تستخدمه للنشر
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build and deploy
+        run: |
+          npm install
+          npm run build
+          npm install -g gh-pages
+          gh-pages -d dist  # أو الدليل الذي يحتوي على ملفاتك الثابتة
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
